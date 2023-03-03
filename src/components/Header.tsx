@@ -1,6 +1,5 @@
-import { Brain, List } from "phosphor-react";
+import { Brain, List, X } from "phosphor-react";
 import { useState } from "react";
-import { Listbox } from '@headlessui/react';
 
 interface MenuItem {
   label: string;
@@ -11,52 +10,58 @@ interface Props {
   menuItems: MenuItem[];
 }
 
+
 export function Header({ menuItems }: Props) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  console.log(isMenuOpen)
 
-  const [selectedMenuItem, setSelectedMenuItem] = useState(menuItems[0]);
-
-  
   return (
-    <header className="bg-gray-800 text-white px-4 py-3">
-      <div className="flex justify-between items-center">
-        <div></div>
-        <div className="flex direction-row gap-1 items-center">
-          <h1 className="text-xl font-bold">StockMind</h1>
-          <Brain size={32} color="#fe12f3" weight="duotone" />
+    <header className="w-full mx-auto">
+        <div className="flex items-center justify-between py-4  w-full">
+          <div className="flex items-center gap-2 w-full">
+            <h1 className="text-2xl font-bold">Stock Mind</h1>
+            <Brain size={32} color="#fe12f3" weight="duotone" />
+          </div>
+
+          <div className="hidden md:flex md:items-center md:ml-10">
+            {menuItems.map((item) => (
+              <a
+                key={item.url}
+                href={item.url}
+                className="px-3 py-2 rounded-md text-sm font-medium hover:text-gray-100"
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="z-50 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+            >
+              {isMenuOpen ? (
+                <X size={32} className="h-6 w-6" />
+              ) : (
+                <List size={32} className="h-6 w-6" />
+              )}
+            </button>
+          </div>
         </div>
-       
-    <nav className="sm:flex">
-          <Listbox value={selectedMenuItem} onChange={setSelectedMenuItem}>
-            <Listbox.Button className="flex items-center gap-2 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-fuchsia-500">
-              {selectedMenuItem.label}
-              <List size={24} />
-            </Listbox.Button>
-            <Listbox.Options className="absolute z-10 py-1 mt-1 overflow-auto text-base bg-gray-500 rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-              {menuItems.map((menuItem, index) => (
-                <Listbox.Option
-                  key={index}
-                  value={menuItem}
-                  className={({ active, selected }) =>
-                    `${
-                      active
-                        ? "text-white bg-fuchsia-600"
-                        : "text-gray-900"
-                    }
-                      ${
-                        selected
-                          ? "font-medium text-white bg-fuchsia-600"
-                          : ""
-                      }
-                      cursor-default select-none relative py-2 pl-3 pr-9`
-                  }
-                >
-                  {menuItem.label}
-                </Listbox.Option>
-              ))}
-            </Listbox.Options>
-          </Listbox>
-        </nav>
-      </div>
+
+      {isMenuOpen && (
+        <div className="md:hidden bg-gray-900 fixed  top-0 left-0 right-0 bottom-0 z-20 flex flex-col items-center justify-center">
+          {menuItems.map((item) => (
+            <a
+              key={item.url}
+              href={item.url}
+              className="px-3 py-2 rounded-md text-2xl font-medium hover:text-gray-100"
+            >
+              {item.label}
+            </a>
+          ))}
+        </div>
+      )}
     </header>
   );
 }
