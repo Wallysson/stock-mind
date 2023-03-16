@@ -46,6 +46,11 @@ export function News() {
     <div className="min-h-screen max-w-[1312px] mx-auto px-4 flex flex-col">
       <Header menuItems={menuItems} />
 
+      <h1 className="text-xl font-bold mb-4">Latest News</h1>
+      <p className="text-lg text-gray-500 mb-8">
+        Check out the latest news about Ibovespa:
+      </p>
+
       {isLoading ? (
         <div className="flex items-center justify-center h-screen">
           <Spinner />
@@ -53,45 +58,38 @@ export function News() {
       ) : (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {news.map(
-              (article) =>
-                article.title &&
-                article.author &&
-                article.publishedAt && (
-                  <a
-                    href={article.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    key={article.url}
-                    className="border rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300"
-                  >
-                    {article.urlToImage && (
-                      <img
-                        src={article.urlToImage}
-                        alt={article.title}
-                        className="w-full h-48 object-cover"
-                      />
-                    )}
-                    <div className="p-4">
-                      {article.title && (
-                        <h3 className="text-lg font-medium mb-2">
-                          {article.title}
-                        </h3>
-                      )}
-                      {article.author && (
-                        <p className="text-gray-700 text-base mb-2">
-                          {article.author}
-                        </p>
-                      )}
-                      {article.publishedAt && (
-                        <p className="text-gray-600 text-base">
-                          {new Date(article.publishedAt).toLocaleDateString()}
-                        </p>
-                      )}
-                    </div>
-                  </a>
-                )
-            )}
+            {news.map((article) => (
+              <a
+                href={article.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                key={article.url}
+                className="border rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 transform scale-100 hover:scale-[1.02]"
+              >
+                {article.urlToImage && (
+                  <img
+                    src={article.urlToImage}
+                    alt={article.title}
+                    className="w-full h-48 object-fill"
+                  />
+                )}
+                <div className="p-4">
+                  <h3 className="text-lg font-medium mb-2">
+                    {article.title ? article.title : "Sem título ainda."}
+                  </h3>
+
+                  <p className="text-gray-700 text-base mb-2">
+                    {!!article.author ? article.author : "Sem autor ainda."}
+                  </p>
+
+                  <p className="text-gray-600 text-base">
+                    {article.publishedAt
+                      ? new Date(article.publishedAt).toLocaleDateString()
+                      : 'Sem data ainda.'}
+                  </p>
+                </div>
+              </a>
+            ))}
           </div>
           <div className="flex justify-center my-6">
             <button

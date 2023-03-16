@@ -1,6 +1,6 @@
 import { Brain, List, X } from "phosphor-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 interface MenuItem {
   label: string;
@@ -13,13 +13,14 @@ interface Props {
 
 export function Header({ menuItems }: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
   return (
     <header className="w-full mx-auto">
       <div className="flex items-center justify-between py-8  w-full">
         <Link to={"/"}>
           <div className="flex items-center gap-2 w-full">
-            <h1 className="text-2xl font-bold">Stock Mind</h1>
+            <h1 className="text-3xl font-bold">Stock Mind</h1>
             <Brain size={32} color="#ec4899" weight="duotone" />
           </div>
         </Link>
@@ -29,7 +30,9 @@ export function Header({ menuItems }: Props) {
             <Link
               key={item.url}
               to={item.url}
-              className="px-3 py-2 rounded-md text-sm font-medium hover:text-gray-100"
+              className={`px-3 py-2 rounded-md text-base font-medium hover:text-[#f4abcf] ${
+                location.pathname === item.url ? "text-[#ec4899]" : ""
+              }`}
             >
               {item.label}
             </Link>
