@@ -17,10 +17,12 @@ export function Header({ menuItems }: Props) {
   return (
     <header className="w-full mx-auto">
       <div className="flex items-center justify-between py-8  w-full">
-        <div className="flex items-center gap-2 w-full">
-          <h1 className="text-2xl font-bold">Stock Mind</h1>
-          <Brain size={32} color="#ec4899" weight="duotone" />
-        </div>
+        <Link to={"/"}>
+          <div className="flex items-center gap-2 w-full">
+            <h1 className="text-2xl font-bold">Stock Mind</h1>
+            <Brain size={32} color="#ec4899" weight="duotone" />
+          </div>
+        </Link>
 
         <div className="hidden md:flex md:items-center md:ml-10">
           {menuItems.map((item) => (
