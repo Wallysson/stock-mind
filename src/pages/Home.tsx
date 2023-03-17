@@ -1,7 +1,7 @@
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
-import image from "../assets/lp-stonks.png";
 import { menuItems } from "../utils/menu";
+import image from "../assets/lp-stonks.png";
 
 export function Home() {
   return (

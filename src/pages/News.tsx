@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { Spinner } from "../components/Spinner";
 import { api } from "../lib/api";
@@ -25,7 +26,7 @@ export function News() {
     const fetchNews = async () => {
       setIsLoading(true);
       const response = await api.get(
-        `https://newsapi.org/v2/everything?q=Ibovespa&language=pt&pageSize=12&page=${currentPage}&sortBy=publishedAt&apiKey=${API_KEY}`
+        `everything?q=Ibovespa&language=pt&pageSize=12&page=${currentPage}&sortBy=publishedAt&apiKey=${API_KEY}`
       );
       setNews(response.data.articles);
       setIsLoading(false);
@@ -95,19 +96,20 @@ export function News() {
             <button
               onClick={handlePrevPage}
               disabled={currentPage === 1}
-              className="mr-2 px-4 py-2 border rounded-lg text-white bg-blue-500 hover:bg-blue-600 disabled:opacity-50 transition duration-300"
+              className="mr-2 px-4 py-2 border rounded text-white bg-gray-500 hover:bg-gray-600 disabled:opacity-50 transition duration-300"
             >
               Anterior
             </button>
             <button
               onClick={handleNextPage}
-              className="px-4 py-2 border rounded-lg text-white bg-blue-500 hover:bg-blue-600 transition duration-300"
+              className="px-4 py-2 border rounded text-white bg-gray-500 hover:bg-gray-600 transition duration-300"
             >
               Próxima
             </button>
           </div>
         </>
-      )}
+      )}  
+      <Footer />
     </div>
   );
 }
